@@ -1,0 +1,94 @@
+<!doctype html>
+
+<html ng-app="easyList">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>EasyList</title>
+
+  <!-- Include CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/easyList.css">
+
+  <!-- Inculde JS -->
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+  <script src="js/controllers/main.js"></script>
+  <script src="js/services/items.js"></script>
+  <script src="js/core.js"></script>
+</head>
+
+
+<body ng-controller="mainController">
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <div class="main-content">
+        <!-- title -->
+        <h1 class="text-primary">
+          <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+          EasyList
+        </h1>
+
+        <!-- Item form creation -->
+        <div id="item-form">
+          <form>
+            <div class="form-group">
+              <input type="text" class="form-control input-lg" placeholder="Type something to do and press enter" ng-model="formData.text">
+            </div>
+            <!-- Hidden button -->
+            <button type="submit" class="hidden" ng-click="createItem()">Add</button>
+          </form>
+        </div>
+
+
+        <!-- The item list -->
+        <div class="item-list">
+          <div class="checkbox" ng-repeat="item in items">
+            <label class="{{item.closed}}">
+              <input ng-if="!item.closed" type="checkbox" ng-checked="item.closed" ng-click="closeItem(item._id)"> {{ item.text }}
+            </label>
+            <button ng-click="deleteItem(item._id)" class="pull-right btn btn-xs btn-default">
+              <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+            </button>
+            <hr ng-if="!$last " />
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Info -->
+      <div class="info">
+        <div class="row">
+          <div class="col-xs-6">
+            <ng-pluralize count="opened.length"
+                          when="{'0': 'Yey ! Nothing to do',
+                     'one': '1 item left',
+                     'other': '{} items left'}">
+            </ng-pluralize>
+          </div>
+
+          <div class="col-xs-6">
+            <span class="label-closed-item pull-right" ng-if="closed.length > 0">
+              <ng-pluralize count="closed.length"
+                            when="{'one': '1 item closed',
+                     'other': '{} items closed'}">
+              </ng-pluralize>
+            </span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- footer -->
+      <div class="footer">
+        EasyList - v0.0.1 - NodeJS, MongoDB, AngularJS - Powered by Fernando Garrigos
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
